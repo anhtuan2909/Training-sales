@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đào Tạo Sales Buổi 4: Chốt Sale Như Chiến Binh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Visualization & Content Choices:
+        - Objectives: Goal: Clarify learning outcomes -> Viz: Styled list -> Interaction: Static. Justification: Direct and clear.
+        - Customer Profiles: Goal: Understand target audience -> Viz: Accordion/Collapsible Cards -> Interaction: Click to expand profile details (Needs/Pain, Sales Focus). Justification: Organizes diverse profiles neatly, allows focused study.
+        - Probing Questions: Goal: Equip with questioning techniques -> Viz: Categorized, expandable lists -> Interaction: Click category/question to reveal details/tips. Justification: Structured access to a large set of questions.
+        - Objection Handling: Goal: Prepare for sales challenges -> Viz: Accordion for common objections -> Interaction: Click to expand detailed handling strategies. Justification: Quick reference for specific objections.
+        - Demo Skills: Goal: Improve presentation effectiveness -> Viz: Styled bullet points/sections -> Interaction: Static. Justification: Clear, actionable advice.
+        - Activities (Role-play): Goal: Facilitate practice -> Viz: Structured text, scenario prompts (if simple) -> Interaction: Primarily informational, guiding live practice. Justification: Supports the hands-on nature of this section.
+        - Graphics: Unicode icons for visual cues. No charts/SVG/Mermaid.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active {
+            border-color: #059669; /* emerald-600 */
+            color: #059669; /* emerald-600 */
+            font-weight: 600;
+        }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 1500px; /* Increased max-height */
+        }
+        .arrow-icon.rotate-180 { transform: rotate(180deg); } 
+        .tab-button {
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-emerald-700 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-2xl md:text-3xl font-bold text-center md:text-left">BUỔI 4 – CHỐT SALE NHƯ CHIẾN BINH</h1>
+        </div>
+        <nav class="bg-white shadow-sm">
+            <div class="container mx-auto flex flex-wrap justify-center md:justify-start">
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="objectives">🎯 Mục Tiêu</button>
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="profiles">👤 Chân Dung KH</button>
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="questions">❓ Khai Thác Nhu Cầu</button>
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="objections">💬 Xử Lý Phản Biện</button>
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="demo">🎤 Demo & Trình Bày</button>
+                <button class="tab-button py-3 px-4 md:py-4 md:px-6 text-sm md:text-base text-gray-600 hover:text-emerald-600 border-b-2 border-transparent" data-tab="activities">🧠 Hoạt Động</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6">
+        
+        <section id="objectives" class="content-section bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">🎯</span>Mục tiêu buổi học</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2 pl-4">
+                <li>Biết khai thác nhu cầu – nỗi đau của khách hàng qua kỹ năng đặt câu hỏi.</li>
+                <li>Xử lý các lời phản biện và từ chối của khách hàng một cách thông minh và thuyết phục.</li>
+                <li>Diễn tập trình bày, demo và chốt deal một cách tự tin, hiệu quả.</li>
+            </ul>
+        </section>
+
+        <section id="profiles" class="content-section bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">👤</span>Chân dung khách hàng mục tiêu của NetGuardX</h2>
+            <p class="text-gray-600 mb-6">Việc hiểu rõ đối tượng khách hàng giúp sales tiếp cận và tư vấn một cách phù hợp nhất.</p>
+            <div id="customer-profiles-accordion" class="space-y-4">
+                </div>
+        </section>
+
+        <section id="questions" class="content-section bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">❓</span>Bộ câu hỏi khai thác nhu cầu và "nỗi đau"</h2>
+            <p class="text-gray-600 mb-6">Kỹ năng đặt câu hỏi đúng giúp khơi gợi thông tin, hiểu rõ tình hình và những trăn trở thực sự của khách hàng.</p>
+            <div id="probing-questions-accordion" class="space-y-4">
+                </div>
+        </section>
+        
+        <section id="objections" class="content-section bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">💬</span>Phản biện & xử lý từ chối thường gặp</h2>
+            <p class="text-gray-600 mb-6">Chuẩn bị trước các phương án xử lý giúp sales tự tin và chuyên nghiệp hơn.</p>
+            <div id="objections-accordion" class="space-y-4">
+                </div>
+        </section>
+
+        <section id="demo" class="content-section bg-white p-6 rounded-lg shadow-sm mb-6">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">🎤</span>Demo – trình bày hiệu quả</h2>
+            <p class="text-gray-600 mb-6">Một buổi demo/trình bày ấn tượng có thể quyết định thành công của thương vụ.</p>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-emerald-600 mb-2">Chuẩn bị kỹ lưỡng:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-5">
+                        <li>Sử dụng One-pager NetGuardX như một bản tóm tắt nhanh các điểm chính trước hoặc sau buổi gặp.</li>
+                        <li>Tùy chỉnh slide trình bày: linh hoạt, tập trung vào những nội dung giải quyết trực tiếp "nỗi đau" đã khai thác được từ khách hàng.</li>
+                        <li>Dữ liệu demo (nếu có): chuẩn bị dữ liệu trực quan, dễ hiểu, thể hiện tình huống thực tế.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-emerald-600 mb-2">Trong quá trình trình bày/demo:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-5">
+                        <li>Bắt đầu bằng việc tóm tắt lại nhu cầu của khách hàng.</li>
+                        <li>Tập trung vào lợi ích, không chỉ tính năng.</li>
+                        <li>Sử dụng ngôn ngữ của khách hàng, giải thích thuật ngữ nếu cần.</li>
+                        <li>Tạo sự tương tác, đặt câu hỏi.</li>
+                        <li>Minh họa trực quan (video, kịch bản giả định).</li>
+                        <li>Kể chuyện (Storytelling) bằng case study.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-emerald-600 mb-2">Kết thúc mạnh mẽ:</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-1 pl-5">
+                        <li>Tóm tắt lại các lợi ích chính, gắn với nhu cầu khách hàng.</li>
+                        <li>Đưa ra lời kêu gọi hành động rõ ràng (Call to Action - CTA): demo chuyên sâu, báo giá, đánh giá an ninh ban đầu...</li>
+                        <li>Xác nhận các bước tiếp theo và thời gian thực hiện.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="activities" class="content-section bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">🧠</span>Hoạt động thực hành</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-emerald-600 mb-2">🎭 Role-play (Diễn tập tình huống):</h3>
+                    <p class="text-gray-700 mb-1"><strong>Mục tiêu:</strong> Thực hành các kỹ năng đã học trong một môi trường mô phỏng.</p>
+                    <p class="text-gray-700 font-medium">Cách thức:</p>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-5">
+                        <li>Chia nhóm 3 người: 1 Khách hàng (chuẩn bị phản biện), 1 Sale (thực hành), 1 Quan sát viên (dùng phiếu đánh giá).</li>
+                        <li>Thời gian mỗi lượt: khoảng 15-20 phút.</li>
+                        <li>Luân phiên đổi vai.</li>
+                    </ol>
+                </div>
+                <div id="role-play-scenario-prompter" class="mt-4 p-4 bg-emerald-50 rounded-md">
+                     <h4 class="font-semibold text-emerald-700 mb-2">Gợi ý Kịch bản Role-play Đơn giản:</h4>
+                     <p class="text-sm text-gray-600 mb-1"><strong>Tình huống:</strong> Khách hàng là một nhà máy sản xuất vừa và nhỏ, đã có đội IT nhưng chưa có giải pháp giám sát an ninh chuyên biệt.</p>
+                     <p class="text-sm text-gray-600 mb-1"><strong>Sale:</strong> Thực hiện các bước khai thác nhu cầu, giới thiệu NetGuardX và xử lý các phản biện như "chúng tôi đã có IT rồi" hoặc "chi phí có vẻ cao".</p>
+                     <p class="text-sm text-gray-600"><strong>Khách hàng:</strong> Đưa ra các lo ngại về việc bảo vệ dây chuyền sản xuất (OT) và dữ liệu thiết kế, đồng thời bày tỏ sự hạn chế về ngân sách.</p>
+                     <button id="refresh-scenario" class="mt-3 text-xs bg-emerald-200 text-emerald-800 px-3 py-1 rounded hover:bg-emerald-300 transition-colors">Tải kịch bản khác (ví dụ)</button>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-emerald-600 mb-2 mt-6">📝 Chấm điểm và Feedback lẫn nhau:</h3>
+                    <p class="text-gray-700 mb-1"><strong>Mục tiêu:</strong> Cung cấp phản hồi mang tính xây dựng để cải thiện kỹ năng.</p>
+                    <p class="text-gray-700 font-medium">Cách thức:</p>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-5">
+                        <li>Quan sát viên chia sẻ nhận xét dựa trên phiếu đánh giá.</li>
+                        <li>Người đóng vai Khách hàng chia sẻ cảm nhận.</li>
+                        <li>Người đóng vai Sale tự đánh giá.</li>
+                        <li>Cả nhóm thảo luận, rút kinh nghiệm, tập trung "làm thế nào để tốt hơn".</li>
+                    </ol>
+                     <p class="text-gray-700 mt-2 font-medium">Tiêu chí đánh giá gợi ý:</p>
+                     <ul class="list-disc list-inside text-gray-600 text-sm space-y-1 pl-5">
+                        <li>Khả năng đặt câu hỏi khai thác (đúng trọng tâm, gợi mở).</li>
+                        <li>Kỹ năng lắng nghe và thấu hiểu khách hàng.</li>
+                        <li>Trình bày giải pháp rõ ràng, logic, tập trung vào lợi ích.</li>
+                        <li>Xử lý phản biện/từ chối một cách thuyết phục, chuyên nghiệp.</li>
+                        <li>Mức độ tự tin, ngôn ngữ cơ thể.</li>
+                        <li>Khả năng chốt Call-to-Action hiệu quả.</li>
+                     </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-6 mt-8 text-sm text-gray-500">
+        NetGuardX Sales Training &copy; <span id="currentYear"></span>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const contentSections = document.querySelectorAll('.content-section');
+        
+        if (tabButtons.length > 0 && contentSections.length > 0) {
+            tabButtons[0].classList.add('active');
+            contentSections[0].classList.add('active');
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                contentSections.forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById(button.dataset.tab);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        function createAccordionItem(id, title, contentHtml, parentElementId, itemClass = 'bg-gray-100') {
+            const parent = document.getElementById(parentElementId);
+            if (!parent) return;
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = `rounded-md overflow-hidden shadow-sm ${itemClass}`;
+
+            const button = document.createElement('button');
+            button.className = 'w-full flex justify-between items-center p-4 text-left font-medium text-emerald-700 hover:bg-emerald-50 focus:outline-none';
+            button.innerHTML = `
+                <span>${title}</span>
+                <svg class="w-5 h-5 transform arrow-icon transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            `;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'accordion-content bg-white p-6 border-t border-gray-200';
+            contentDiv.innerHTML = contentHtml;
+
+            button.addEventListener('click', () => {
+                const isOpening = !contentDiv.classList.contains('open');
+                
+                const allAccordionContentsInParent = parent.querySelectorAll('.accordion-content');
+                allAccordionContentsInParent.forEach(ac => {
+                    if (ac !== contentDiv) { 
+                        ac.classList.remove('open');
+                        ac.style.maxHeight = null;
+                        const otherButton = ac.previousElementSibling;
+                        if(otherButton && otherButton.querySelector('.arrow-icon')) { // Check if otherButton and arrow-icon exist
+                           otherButton.querySelector('.arrow-icon').classList.remove('rotate-180');
+                        }
+                    }
+                });
+
+                contentDiv.classList.toggle('open');
+                const arrow = button.querySelector('.arrow-icon');
+                if (arrow) { 
+                    arrow.classList.toggle('rotate-180');
+                }
+                
+                if (contentDiv.classList.contains('open')) {
+                    contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
+                } else {
+                    contentDiv.style.maxHeight = null;
+                }
+            });
+            
+            itemDiv.appendChild(button);
+            itemDiv.appendChild(contentDiv);
+            parent.appendChild(itemDiv);
+        }
+
+
+        const customerProfilesData = [
+            { title: "Nhà máy (OT & IT)", needs: "Bảo vệ dây chuyền sản xuất (OT) và dữ liệu kinh doanh (IT), rủi ro dừng hoạt động.", focus: "Giám sát và bảo vệ đồng thời IT & OT, phát hiện bất thường trên hệ thống ICS." },
+            { title: "Khách hàng FDI", needs: "Tuân thủ bảo mật từ công ty mẹ (ISO 27001...), cần báo cáo minh bạch.", focus: "Hỗ trợ tuân thủ, cung cấp dashboard trực quan, kinh nghiệm với doanh nghiệp FDI." },
+            { title: "Trường học", needs: "Bảo vệ dữ liệu cá nhân (học sinh, giáo viên), hệ thống học tập/thi cử trực tuyến, rủi ro mất uy tín.", focus: "Bảo vệ dữ liệu toàn diện, giám sát truy cập bất thường, ngăn chặn tấn công E-learning." },
+            { title: "Hệ thống bán lẻ", needs: "Bảo vệ dữ liệu khách hàng (thẻ tín dụng), hệ thống POS, website TMĐT, tuân thủ PCI DSS.", focus: "Giám sát giao dịch bất thường, bảo vệ POS, hỗ trợ PCI DSS, bảo vệ website." },
+            { title: "Ngành khác (Ví dụ)", needs: "Tài chính (tuân thủ, dữ liệu nhạy cảm), Chính phủ (thông tin quốc gia), Y tế (dữ liệu bệnh nhân), Vận tải (hạ tầng quan trọng).", focus: "Giải pháp tùy chỉnh theo đặc thù ngành, đảm bảo an toàn cho dữ liệu và hạ tầng trọng yếu." }
+        ];
+        if(document.getElementById('customer-profiles-accordion')) {
+            customerProfilesData.forEach((profile, index) => {
+                const content = `
+                    <p class="text-gray-700 mb-2"><strong>Nhu cầu/Nỗi đau:</strong> ${profile.needs}</p>
+                    <p class="text-gray-700"><strong>Điểm nhấn khi tư vấn:</strong> ${profile.focus}</p>
+                `;
+                createAccordionItem(`profile-${index}`, profile.title, content, 'customer-profiles-accordion', 'bg-emerald-50');
+            });
+        }
+
+        const probingQuestionsData = [
+            { 
+                category: "Câu hỏi mở đầu, khơi gợi vấn đề chung", 
+                questions: [
+                    { q: "\"Anh/chị có đang lo ngại về nguy cơ bị tấn công mạng, đặc biệt là Ransomware hay mất dữ liệu khách hàng không?\"", tip: "Đi thẳng vào rủi ro phổ biến, dễ hình dung." },
+                    { q: "\"Theo anh/chị, đâu là tài sản thông tin hoặc quy trình kinh doanh quan trọng nhất cần được bảo vệ?\"", tip: "Giúp khách hàng tự xác định ưu tiên." }
+                ] 
+            },
+            {
+                category: "Câu hỏi về hiện trạng giám sát và phát hiện",
+                questions: [
+                    { q: "\"Hiện tại, làm thế nào để bộ phận IT/an ninh của mình biết được khi có một sự cố bảo mật xảy ra?\"", tip: "Khai thác quy trình giám sát hiện tại." },
+                    { q: "\"Anh/chị có thường xuyên nhận được cảnh báo từ hệ thống không? Việc phân tích chúng có tốn nhiều thời gian?\"", tip: "Hiểu về gánh nặng cảnh báo." },
+                    { q: "\"Thời gian trung bình để phát hiện sự cố (MTTD) là khoảng bao lâu ạ?\"", tip: "Đánh giá khả năng phát hiện sớm." }
+                ]
+            },
+            {
+                category: "Câu hỏi về tác động và \"nỗi đau\" tài chính/vận hành",
+                questions: [
+                    { q: "\"Nếu hệ thống dừng hoạt động, ước tính thiệt hại về doanh thu và chi phí khắc phục là bao nhiêu?\"", tip: "Định lượng nỗi đau tài chính." },
+                    { q: "\"Một sự cố data breach ảnh hưởng đến uy tín và niềm tin của đối tác/khách hàng như thế nào?\"", tip: "Đánh giá tác động phi tài chính." }
+                ]
+            },
+             {
+                category: "Câu hỏi về tuân thủ và pháp lý",
+                questions: [
+                    { q: "\"Việc tuân thủ các quy định về bảo vệ dữ liệu (Nghị định 13, GDPR...) có đang là áp lực đối với công ty mình không?\"", tip: "Khai thác áp lực tuân thủ." },
+                    { q: "\"Công ty mình có phải tuân theo các tiêu chuẩn bảo mật cụ thể nào từ ngành nghề hoặc công ty mẹ không?\"", tip: "Hiểu rõ yêu cầu tuân thủ cụ thể." }
+                ]
+            },
+            {
+                category: "Câu hỏi về nguồn lực và năng lực nội bộ",
+                questions: [
+                    { q: "\"Đội ngũ IT hiện tại có đủ nguồn lực và chuyên môn để giám sát an ninh 24/7 và ứng phó với các tấn công phức tạp không?\"", tip: "Khai thác bài toán nhân lực." },
+                    { q: "\"Anh/chị có gặp khó khăn trong việc tuyển dụng và giữ chân chuyên gia an ninh mạng giỏi không?\"", tip: "Thực trạng phổ biến." },
+                    { q: "\"Các công cụ bảo mật hiện tại có đang hoạt động riêng lẻ hay đã được tích hợp?\"", tip: "Khai thác vấn đề silo công nghệ." }
+                ]
+            },
+            {
+                category: "Câu hỏi về giải pháp mong muốn",
+                questions: [
+                     { q: "\"Nếu có giải pháp giám sát 24/7, phát hiện sớm và có chuyên gia hỗ trợ ứng phó, điều đó có giá trị thế nào với tổ chức mình?\"", tip: "Gợi ý về giải pháp lý tưởng." },
+                     { q: "\"Anh/chị mong muốn một đối tác dịch vụ an ninh sẽ hỗ trợ mình những gì cụ thể?\"", tip: "Hiểu rõ kỳ vọng của khách hàng." }
+                ]
+            }
+        ];
+        
+        if(document.getElementById('probing-questions-accordion')) {
+            probingQuestionsData.forEach((categoryData, index) => {
+                let questionsHtml = '<ul class="list-disc list-inside space-y-2 pl-4">';
+                categoryData.questions.forEach(qItem => {
+                    questionsHtml += `<li><strong>${qItem.q}</strong> <em class="text-sm text-gray-500">- ${qItem.tip}</em></li>`;
+                });
+                questionsHtml += '</ul>';
+                createAccordionItem(`questions-cat-${index}`, categoryData.category, questionsHtml, 'probing-questions-accordion', 'bg-teal-50');
+            });
+        }
+        
+        const objectionsData = [
+            {
+                objection: "“Tôi có người phụ trách IT/an ninh rồi” / “Chúng tôi đã có giải pháp bảo mật rồi”",
+                handling: `
+                    <p class="mb-2"><strong>Thấu hiểu & Đồng cảm:</strong> "Dạ, em hiểu rằng việc có đội ngũ IT/an ninh nội bộ là rất quan trọng..."</p>
+                    <p class="mb-2"><strong>Định vị NetGuardX:</strong> "NetGuardX không thay thế họ, mà là 'cánh tay nối dài', cung cấp công nghệ và chuyên gia giám sát 24/7..."</p>
+                    <p class="mb-2"><strong>Lợi ích cho đội ngũ nội bộ:</strong> "Điều này sẽ giúp đội ngũ IT của anh/chị giảm tải, tập trung vào các công việc chiến lược hơn..."</p>
+                    <p><strong>Hỏi thêm để tìm cơ hội:</strong> "Không biết đội ngũ hiện tại có đang gặp thách thức nào trong việc giám sát toàn diện không ạ?"</p>
+                `
+            },
+            {
+                objection: "“Chi phí hơi cao” / “Ngân sách của chúng tôi có hạn”",
+                handling: `
+                    <p class="mb-2"><strong>Thấu hiểu & Đồng cảm:</strong> "Em hoàn toàn hiểu sự quan tâm của anh/chị về chi phí..."</p>
+                    <p class="mb-2"><strong>So sánh chi phí cơ hội và rủi ro:</strong> "...chi phí này là khoản đầu tư để giảm thiểu rủi ro thiệt hại khổng lồ khi xảy ra tấn công."</p>
+                    <p class="mb-2"><strong>So sánh với tự xây dựng:</strong> "Để tự xây dựng một SOC nội bộ... chi phí thường sẽ cao hơn đáng kể."</p>
+                    <p class="mb-2"><strong>Giải pháp linh hoạt:</strong> "Chúng em có các gói dịch vụ linh hoạt... mình có thể bắt đầu với gói phù hợp."</p>
+                    <p><strong>Hỏi về giá trị:</strong> "Nếu NetGuardX giúp anh/chị giảm thiểu X% nguy cơ... mức đầu tư này có còn là rào cản lớn không ạ?"</p>
+                `
+            },
+            {
+                objection: "“Để tôi suy nghĩ thêm” / “Tôi cần trao đổi thêm với sếp/đội ngũ”",
+                handling: `
+                    <p class="mb-2"><strong>Tôn trọng & Hỗ trợ:</strong> "Dạ vâng, việc cân nhắc kỹ lưỡng là hoàn toàn hợp lý..."</p>
+                    <p class="mb-2"><strong>Tìm hiểu rào cản còn lại:</strong> "Không biết còn điểm nào về dịch vụ mà anh/chị cần làm rõ thêm không ạ?"</p>
+                    <p class="mb-2"><strong>Đề xuất bước tiếp theo cụ thể:</strong> "Em có thể gửi thêm tài liệu chi tiết, case study... hoặc một buổi demo kỹ thuật sâu hơn?"</p>
+                    <p><strong>Xin lịch hẹn follow-up:</strong> "Vậy em xin phép được liên hệ lại với anh/chị vào [thời gian cụ thể]..."</p>
+                `
+            },
+            {
+                objection: "“Chúng tôi là doanh nghiệp nhỏ, không phải mục tiêu của hacker”",
+                handling: `
+                    <p class="mb-2"><strong>Cung cấp thông tin thực tế:</strong> "Thực tế hiện nay hacker không chỉ nhắm vào các tập đoàn lớn... doanh nghiệp nhỏ thường có hệ thống bảo mật yếu hơn."</p>
+                    <p class="mb-2"><strong>Tác động tương đối:</strong> "Đối với một doanh nghiệp nhỏ, thiệt hại từ một cuộc tấn công thậm chí có thể nghiêm trọng hơn..."</p>
+                    <p><strong>Giải pháp phù hợp:</strong> "NetGuardX có các gói dịch vụ được thiết kế riêng cho các doanh nghiệp quy mô khác nhau..."</p>
+                `
+            }
+        ];
+
+        if(document.getElementById('objections-accordion')) {
+            objectionsData.forEach((obj, index) => {
+                createAccordionItem(`objection-${index}`, obj.objection, obj.handling, 'objections-accordion', 'bg-red-50');
+            });
+        }
+
+        const scenarioPrompter = document.getElementById('role-play-scenario-prompter');
+        const refreshScenarioBtn = document.getElementById('refresh-scenario');
+        const scenarios = [
+            {
+                situation: "Khách hàng là một chuỗi bán lẻ đang lo ngại về việc tuân thủ PCI DSS và bảo vệ dữ liệu thanh toán của khách hàng.",
+                sale_task: "Tập trung vào khả năng hỗ trợ tuân thủ PCI DSS, bảo vệ hệ thống POS và website TMĐT của NetGuardX.",
+                customer_concern: "Ngân sách hạn chế và lo ngại về sự phức tạp khi triển khai một giải pháp mới."
+            },
+            {
+                situation: "Khách hàng là một trường đại học lớn, vừa trải qua một sự cố rò rỉ dữ liệu sinh viên quy mô nhỏ.",
+                sale_task: "Nhấn mạnh khả năng giám sát toàn diện, phát hiện xâm nhập sớm và hỗ trợ điều tra sự cố của NetGuardX. Đề xuất giải pháp bảo vệ dữ liệu.",
+                customer_concern: "Cần một giải pháp có thể triển khai nhanh chóng và không làm gián đoạn hệ thống hiện tại quá nhiều."
+            },
+            {
+                situation: "Khách hàng là một công ty FDI trong lĩnh vực sản xuất, công ty mẹ yêu cầu tuân thủ ISO 27001.",
+                sale_task: "Giải thích cách NetGuardX có thể giúp đáp ứng các yêu cầu của ISO 27001 thông qua giám sát, báo cáo và quản lý sự cố. Chia sẻ kinh nghiệm làm việc với các công ty FDI khác.",
+                customer_concern: "Cần đảm bảo tính minh bạch và khả năng xuất báo cáo chi tiết cho công ty mẹ."
+            }
+        ];
+        let currentScenarioIndex = 0;
+
+        if(refreshScenarioBtn && scenarioPrompter) {
+            refreshScenarioBtn.addEventListener('click', () => {
+                currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+                const scenario = scenarios[currentScenarioIndex];
+                const prompterContent = scenarioPrompter.querySelectorAll('p');
+                if(prompterContent.length >=3) {
+                    prompterContent[0].innerHTML = `<strong>Tình huống:</strong> ${scenario.situation}`;
+                    prompterContent[1].innerHTML = `<strong>Sale:</strong> ${scenario.sale_task}`;
+                    prompterContent[2].innerHTML = `<strong>Khách hàng:</strong> ${scenario.customer_concern}`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đào Tạo Sales Buổi 3: Thuật Ngữ Bảo Mật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-button.active {
+            background-color: #059669; /* emerald-600 */
+            color: #ffffff;
+        }
+        .modal {
+            display: none;
+            opacity: 0; /* Start with opacity 0 for transition */
+            transition: opacity 0.3s ease;
+        }
+        .modal.flex { /* When JS adds 'flex' to display it */
+            opacity: 1;
+        }
+        .term-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .term-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .quiz-option:hover {
+            background-color: #d1fae5; /* emerald-100 */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <header class="bg-emerald-700 text-white shadow-md">
+        <div class="container mx-auto px-6 py-4">
+            <h1 class="text-3xl font-bold">BUỔI 3 – THUẬT NGỮ BẢO MẬT DÀNH CHO SALE</h1>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        
+        <section id="objective" class="mb-8 bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold text-emerald-700 mb-3 flex items-center"><span class="text-3xl mr-3">🎯</span>Mục tiêu buổi học</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li>Nắm đúng các từ khoá hay gặp trong lĩnh vực bảo mật.</li>
+                <li>Không nói sai hoặc hiểu sai khi trao đổi với khách hàng.</li>
+                <li>Biết dùng thuật ngữ một cách tự nhiên và chuyên nghiệp để nâng cao giá trị dịch vụ.</li>
+            </ul>
+        </section>
+
+        <section id="glossary" class="mb-8">
+            <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">📚</span>Nội dung chính: Thuật ngữ</h2>
+            <div class="mb-4 flex flex-wrap justify-center gap-2">
+                <button class="tab-button active px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md shadow-sm hover:bg-gray-100" data-filter="all">Tất cả</button>
+                <button class="tab-button px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md shadow-sm hover:bg-gray-100" data-filter="attack">Tấn công & Rủi ro</button>
+                <button class="tab-button px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md shadow-sm hover:bg-gray-100" data-filter="soc">Kỹ thuật SOC & NetGuardX</button>
+            </div>
+            <div id="term-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                </div>
+        </section>
+
+        <section id="application" class="mb-8 grid md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                 <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">💡</span>Cách giải thích ngắn gọn</h2>
+                 <ul class="list-none text-gray-700 space-y-4">
+                     <li><strong>Đặt mình vào vị trí khách hàng:</strong> Luôn bắt đầu từ vấn đề hoặc lợi ích của họ, không phải từ định nghĩa kỹ thuật.</li>
+                     <li><strong>Dùng hình ảnh ẩn dụ:</strong> So sánh các khái niệm phức tạp với những thứ quen thuộc trong đời sống. (Ví dụ: SIEM là camera an ninh trung tâm, IOC là dấu vân tay tội phạm).</li>
+                     <li><strong>Tập trung vào "Tại sao nó quan trọng?":</strong> Thay vì chỉ nói "MTTD là gì", hãy nói "MTTD càng thấp, chúng tôi càng giúp anh/chị giảm thiểu thiệt hại nhanh hơn."</li>
+                 </ul>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                 <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">🗣️</span>Ứng dụng khi tư vấn</h2>
+                 <ul class="list-none text-gray-700 space-y-4">
+                     <li><strong>Dùng đúng thuật ngữ, đúng ngữ cảnh:</strong> "Chúng tôi nhận thấy các doanh nghiệp trong ngành đang đối mặt với nguy cơ từ **ransomware**..." nghe chuyên nghiệp hơn "máy tính có thể bị virus".</li>
+                     <li><strong>Kết nối thuật ngữ với giá trị dịch vụ:</strong> "Hệ thống **SIEM** của NetGuardX giúp phát hiện các **IOC** mới nhất..." thay vì "máy này tìm virus".</li>
+                     <li><strong>Tránh lạm dụng:</strong> Mục tiêu là giúp khách hàng hiểu, không phải gây ấn tượng bằng từ chuyên ngành. Luôn kiểm tra xem khách hàng có đang theo kịp không.</li>
+                     <li><strong>Chuyển đổi ngôn ngữ:</strong> Dịch từ "tính năng kỹ thuật" sang "lợi ích kinh doanh". Ví dụ: "Dùng **SOAR** để tự động hóa" trở thành "Phản ứng nhanh hơn 24/7 mà không cần tăng nhân sự."</li>
+                 </ul>
+            </div>
+        </section>
+
+        <section id="activity" class="bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center"><span class="text-3xl mr-3">🧠</span>Hoạt động: Kiểm tra nhanh</h2>
+            <div id="quiz-container">
+                <div id="quiz-intro">
+                    <p class="mb-4 text-gray-700">Hãy cùng kiểm tra lại kiến thức đã học qua một bài trắc nghiệm nhỏ. Sẽ có 5 câu hỏi ngẫu nhiên. Chúc may mắn!</p>
+                    <button id="start-quiz-btn" class="w-full md:w-auto bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Bắt đầu</button>
+                </div>
+                <div id="quiz-main" class="hidden">
+                    <p id="quiz-progress" class="text-sm font-medium text-gray-500 mb-2"></p>
+                    <h3 id="quiz-question" class="text-lg font-semibold text-gray-800 mb-4"></h3>
+                    <div id="quiz-options" class="space-y-3">
+                        </div>
+                </div>
+                <div id="quiz-results" class="hidden">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Hoàn thành!</h3>
+                    <p id="quiz-score" class="text-lg text-gray-700 mb-4"></p>
+                    <button id="restart-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Làm lại</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="term-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
+                <h3 id="modal-title" class="text-xl font-bold text-emerald-700"></h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="modal-content" class="p-6 space-y-4">
+                </div>
+        </div>
+    </div>
+
+
+    <script>
+        const termsData = [
+            { id: 1, category: 'attack', name: 'Virus, Malware, Ransomware', details: '<strong>Virus:</strong> Cần "vật chủ" (file, chương trình) để lây lan, phá hủy dữ liệu. <br><strong>Malware:</strong> Tên gọi chung của phần mềm độc hại (virus, worm, trojan...). <br><strong>Ransomware:</strong> Mã độc tống tiền, mã hóa dữ liệu và đòi tiền chuộc.', analogy: '<strong>Ransomware:</strong> Giống như kẻ bắt cóc "bắt giữ" dữ liệu của bạn và đòi tiền chuộc nếu muốn "cứu" chúng.', sales_tip: 'Nhấn mạnh nguy cơ tê liệt hoạt động kinh doanh và thiệt hại tài chính do Ransomware gây ra.' },
+            { id: 2, category: 'attack', name: 'Phishing, Spear-phishing, Whaling', details: '<strong>Phishing:</strong> Lừa đảo hàng loạt qua email/tin nhắn giả mạo để đánh cắp thông tin. <br><strong>Spear-phishing:</strong> Phishing nhắm mục tiêu cụ thể, nội dung thuyết phục hơn. <br><strong>Whaling:</strong> Spear-phishing nhắm vào các lãnh đạo cấp cao (CEO, CFO).', analogy: '<strong>Phishing:</strong> Giống như việc nhận được một lá thư giả mạo ngân hàng, yêu cầu cung cấp thông tin cá nhân. Nếu không cẩn thận, bạn có thể đưa chìa khóa nhà cho kẻ gian.', sales_tip: 'Giải thích rằng các cuộc tấn công ngày càng tinh vi, không chỉ là email rác thông thường.' },
+            { id: 3, category: 'attack', name: 'Brute Force Attack', details: 'Kỹ thuật tấn công thử tất cả các khả năng có thể của mật khẩu một cách tuần tự cho đến khi tìm ra mật khẩu đúng.', analogy: 'Giống như một tên trộm thử từng chiếc chìa khóa trong chùm chìa khóa lớn để mở một ổ khóa.', sales_tip: 'Liên hệ với tầm quan trọng của chính sách mật khẩu mạnh và giám sát đăng nhập bất thường.' },
+            { id: 4, category: 'attack', name: 'Data Leak / Data Breach', details: '<strong>Data Leak:</strong> Dữ liệu vô tình bị lộ ra ngoài do lỗi, sơ suất. <br><strong>Data Breach:</strong> Dữ liệu bị đánh cắp có chủ đích. Cả hai đều gây hậu quả nghiêm trọng.', analogy: '<strong>Data Leak:</strong> Bỏ quên cặp tài liệu ở nơi công cộng. <br><strong>Data Breach:</strong> Kẻ trộm đột nhập và lấy cắp cặp tài liệu.', sales_tip: 'Nhấn mạnh hậu quả về uy tín, pháp lý và tài chính khi dữ liệu khách hàng bị xâm phạm.' },
+            { id: 5, category: 'attack', name: 'DDOS', details: 'Tấn công từ chối dịch vụ phân tán, làm quá tải hệ thống bằng lượng lớn truy cập giả mạo, gây gián đoạn dịch vụ.', analogy: 'Giống như một đám đông khổng lồ cùng lúc chen vào một cửa hàng nhỏ, khiến khách hàng thực sự không thể vào được.', sales_tip: 'Nói về rủi ro gián đoạn kinh doanh, đặc biệt với các công ty phụ thuộc vào nền tảng online.' },
+            { id: 6, category: 'attack', name: 'APT', details: 'Tấn công có chủ đích, phức tạp, kiên trì và khó phát hiện. Kẻ tấn công thường "nằm vùng" một thời gian dài để đánh cắp dữ liệu.', analogy: 'Giống như một điệp viên nằm vùng, âm thầm thu thập thông tin trong thời gian dài trước khi hành động.', sales_tip: 'Dùng để giải thích tại sao cần giám sát liên tục và chuyên sâu, không chỉ là các giải pháp phòng thủ vành đai.' },
+            { id: 7, category: 'soc', name: 'Endpoint', details: 'Là bất kỳ thiết bị nào kết nối vào mạng (máy tính, laptop, server, điện thoại...). Đây là điểm cuối của mạng và thường là mục tiêu tấn công đầu tiên.', analogy: 'Mỗi Endpoint là một "cánh cửa" vào ngôi nhà (hệ thống) của bạn.', sales_tip: 'Giải thích tầm quan trọng của việc bảo vệ toàn diện các Endpoint, không chỉ máy chủ.' },
+            { id: 8, category: 'soc', name: 'Log', details: 'Bản ghi lại các sự kiện, hoạt động của hệ thống/thiết bị. Là nguồn thông tin quan trọng để giám sát và điều tra.', analogy: 'Giống như hộp đen của máy bay, ghi lại mọi thứ đã xảy ra.', sales_tip: 'Nhấn mạnh rằng NetGuardX không chỉ thu thập mà còn "hiểu" và "phân tích" log để tìm ra vấn đề.' },
+            { id: 9, category: 'soc', name: 'SIEM', details: 'Hệ thống thu thập, tổng hợp, phân tích log và tạo cảnh báo an ninh. Là "bộ não" của trung tâm giám sát.', analogy: 'Như một hệ thống camera an ninh trung tâm, có nhân viên thông minh liên tục theo dõi và báo động khi có dấu hiệu đáng ngờ.', sales_tip: 'Khẳng định SIEM là công nghệ lõi, giúp NetGuardX có cái nhìn toàn cảnh về an ninh của khách hàng.' },
+            { id: 10, category: 'soc', name: 'Alert vs. Incident', details: '<strong>Alert (Cảnh báo):</strong> Là một dấu hiệu đáng ngờ hệ thống phát hiện. <br><strong>Incident (Sự cố):</strong> Là một cảnh báo đã được xác minh là một mối đe dọa thực sự, cần được xử lý.', analogy: '<strong>Alert:</strong> Chuông báo cháy kêu. <br><strong>Incident:</strong> Lính cứu hỏa xác nhận có đám cháy thực sự.', sales_tip: 'Nhấn mạnh giá trị của đội ngũ chuyên gia NetGuardX trong việc phân tích, xác minh cảnh báo để khách hàng không bị làm phiền bởi các cảnh báo sai.' },
+            { id: 11, category: 'soc', name: 'Response', details: 'Quy trình và hành động xử lý khi có Incident, bao gồm ngăn chặn, loại bỏ và khôi phục.', analogy: 'Là kế hoạch tác chiến chi tiết của đội cứu hỏa khi có cháy.', sales_tip: 'Nói về quy trình ứng phó chuyên nghiệp và nhanh chóng của NetGuardX giúp giảm thiểu thiệt hại.' },
+            { id: 12, category: 'soc', name: 'IOC', details: 'Indicator of Compromise - Chỉ số xâm phạm. Là các bằng chứng, dấu vết kỹ thuật cho thấy hệ thống đã bị xâm phạm (địa chỉ IP độc hại, hash file...).', analogy: 'Giống như dấu vân tay hoặc DNA mà tội phạm để lại tại hiện trường.', sales_tip: 'Hệ thống SIEM của NetGuardX giúp phát hiện sớm các IOC mới nhất.' },
+            { id: 13, category: 'soc', name: 'SOAR', details: 'Tự động hóa các bước phản ứng sự cố ban đầu dựa trên các kịch bản (playbook) được định sẵn.', analogy: 'Giống như hệ thống chữa cháy tự động, tự phun nước khi phát hiện khói.', sales_tip: 'SOAR giúp NetGuardX phản ứng nhanh hơn 24/7 mà không cần tăng nhân sự, đảm bảo xử lý nhất quán.' },
+            { id: 14, category: 'soc', name: 'TIP', details: 'Threat Intelligence Platform - Nền tảng Tình báo Đe dọa. Cung cấp thông tin về các mối đe dọa mới nhất trên toàn cầu.', analogy: 'Như một bản tin tình báo an ninh, cập nhật về các "tội phạm mạng" mới và phương thức hoạt động của chúng.', sales_tip: 'Việc tích hợp TIP giúp NetGuardX nhận diện và chặn các mối đe dọa mới một cách chủ động.' },
+            { id: 15, category: 'soc', name: 'UEBA', details: 'Phân tích hành vi của người dùng và thiết bị để phát hiện các hoạt động bất thường, khác với thói quen hàng ngày.', analogy: 'Giống như một người bảo vệ quen thuộc, nhận ra ngay lập tức khi ai đó có hành động lạ hoặc một người lạ mặt xuất hiện.', sales_tip: 'UEBA giúp phát hiện các mối đe dọa tinh vi như tài khoản bị chiếm quyền hoặc mối đe dọa từ nội bộ.' },
+            { id: 16, category: 'soc', name: 'MTTD & MTTR', details: '<strong>MTTD:</strong> Thời gian trung bình để phát hiện sự cố. <br><strong>MTTR:</strong> Thời gian trung bình để xử lý sự cố. Cả hai chỉ số này càng thấp càng tốt.', analogy: 'MTTD là thời gian từ lúc kẻ trộm đột nhập đến lúc chuông báo kêu. MTTR là thời gian từ lúc chuông kêu đến lúc kẻ trộm bị bắt.', sales_tip: 'Cam kết về MTTD và MTTR thấp là một minh chứng hữu hình về hiệu quả dịch vụ của NetGuardX.' },
+        ];
+        
+        const termGrid = document.getElementById('term-grid');
+        const filterButtons = document.querySelectorAll('.tab-button');
+        const modal = document.getElementById('term-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+
+        function createTermCard(term) {
+            const card = document.createElement('div');
+            card.className = 'term-card bg-white p-4 rounded-lg shadow-sm cursor-pointer flex items-center justify-center h-24';
+            card.dataset.termId = term.id;
+            card.innerHTML = `<h4 class="font-semibold text-gray-800 text-center text-sm md:text-base">${term.name}</h4>`;
+            card.addEventListener('click', () => openModal(term));
+            return card;
+        }
+
+        function renderTerms(filter = 'all') {
+            termGrid.innerHTML = '';
+            const filteredTerms = termsData.filter(term => filter === 'all' || term.category === filter);
+            filteredTerms.forEach(term => {
+                termGrid.appendChild(createTermCard(term));
+            });
+        }
+
+        function openModal(term) {
+            modalTitle.textContent = term.name;
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-600 border-b pb-1 mb-2">📖 Định nghĩa</h4>
+                        <p class="text-gray-700">${term.details}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-600 border-b pb-1 mb-2">💡 Ví dụ dễ hiểu</h4>
+                        <p class="text-gray-700">${term.analogy}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-600 border-b pb-1 mb-2">🗣️ Gợi ý cho Sales</h4>
+                        <p class="text-gray-700">${term.sales_tip}</p>
+                    </div>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex'); 
+            void modal.offsetWidth; 
+            modal.style.opacity = 1;
+        }
+
+        function closeModal() {
+            modal.style.opacity = 0;
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300); 
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                renderTerms(button.dataset.filter);
+            });
+        });
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        renderTerms();
+
+        const quizIntro = document.getElementById('quiz-intro');
+        const quizMain = document.getElementById('quiz-main');
+        const quizResults = document.getElementById('quiz-results');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const restartQuizBtn = document.getElementById('restart-quiz-btn');
+        const quizProgress = document.getElementById('quiz-progress');
+        const quizQuestion = document.getElementById('quiz-question');
+        const quizOptions = document.getElementById('quiz-options');
+        const quizScoreEl = document.getElementById('quiz-score');
+
+        let quizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const NUM_QUESTIONS = 5;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            shuffleArray(termsData);
+            quizQuestions = termsData.slice(0, NUM_QUESTIONS);
+            currentQuestionIndex = 0;
+            score = 0;
+            quizIntro.classList.add('hidden');
+            quizResults.classList.add('hidden');
+            quizMain.classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            quizProgress.textContent = `Câu hỏi ${currentQuestionIndex + 1} / ${quizQuestions.length}`;
+            const questionData = quizQuestions[currentQuestionIndex];
+            quizQuestion.textContent = `Thuật ngữ "${questionData.name}" có nghĩa là gì?`;
+            
+            const options = [questionData.details]; 
+            let tempTerms = [...termsData]; 
+            
+            while (options.length < 4 && tempTerms.length > 0) {
+                const randomIndex = Math.floor(Math.random() * tempTerms.length);
+                const randomTerm = tempTerms[randomIndex];
+                if (randomTerm.details !== questionData.details && !options.includes(randomTerm.details)) {
+                    options.push(randomTerm.details);
+                }
+                tempTerms.splice(randomIndex, 1); 
+            }
+             while (options.length < 4) {
+                options.push(`Lựa chọn sai ${options.length}`);
+            }
+
+            shuffleArray(options);
+
+            quizOptions.innerHTML = '';
+            options.forEach(optionText => {
+                const button = document.createElement('button');
+                button.className = 'w-full text-left p-3 border rounded-lg quiz-option transition-colors text-gray-700 hover:border-emerald-500';
+                button.innerHTML = optionText; 
+                button.addEventListener('click', () => selectAnswer(optionText, questionData.details, button));
+                quizOptions.appendChild(button);
+            });
+        }
+        
+        function selectAnswer(selectedOptionText, correctOptionText, button) {
+            const allOptionButtons = quizOptions.querySelectorAll('button');
+            allOptionButtons.forEach(btn => {
+                btn.disabled = true; 
+                btn.classList.remove('bg-green-200', 'border-green-400', 'bg-red-200', 'border-red-400');
+            });
+
+            if (selectedOptionText === correctOptionText) {
+                score++;
+                button.classList.add('bg-green-200', 'border-green-400');
+            } else {
+                button.classList.add('bg-red-200', 'border-red-400');
+                allOptionButtons.forEach(btn => {
+                    if (btn.innerHTML === correctOptionText) { 
+                         btn.classList.add('bg-green-200', 'border-green-400');
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showQuestion();
+            }, 1500); 
+        }
+
+        function showResults() {
+            quizMain.classList.add('hidden');
+            quizResults.classList.remove('hidden');
+            quizScoreEl.textContent = `Điểm của bạn: ${score} / ${quizQuestions.length}`;
+        }
+
+        startQuizBtn.addEventListener('click', startQuiz);
+        restartQuizBtn.addEventListener('click', startQuiz);
+
+    </script>
+</body>
+</html>

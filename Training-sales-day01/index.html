@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đào tạo NetGuardX - Buổi 1: Hiểu Vì Sao Khách Hàng Cần Bảo Mật</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Visualization & Content Choices:
+        - Report Info: Cybersecurity Stats (VN & Global). Goal: Show urgency. Viz/Presentation: Bar chart (Chart.js) for attack numbers/growth. Y-axis uses logarithmic scale for clear visualization of widely differing data points, with formatted ticks (e.g., 1K, 1M) and clear tooltips. Interaction: Hover for details. Justification: Effectively visualizes trends across varying magnitudes. Library: Chart.js.
+        - Report Info: Impact on Business. Goal: Show consequences. Viz/Presentation: Dynamic stat callouts, a doughnut chart (Chart.js) focusing on directly comparable average breach costs (e.g., global average vs. finance industry), with the very large projected global loss presented as highlighted text for better comprehension. Interaction: Hover for details on chart. Justification: Clear visual comparison for similar scale data, prominent text for large-scale data. Library: JS + Tailwind.
+        - Report Info: Nghị định 13. Goal: Legal awareness. Viz/Presentation: Accordion for key articles/responsibilities. Content completely hidden until expanded. Justification: Organized, allows drill-down. Library: JS + Tailwind.
+        - Report Info: Attack Types. Goal: Identify threats. Viz/Presentation: Interactive cards with icons (Font Awesome/Unicode) and brief descriptions; click to expand for details. Content completely hidden until expanded. Justification: Visually appealing, digestible info chunks. Library: JS + Tailwind.
+        - Report Info: Case Studies. Goal: Illustrate real-world scenarios. Viz/Presentation: Well-formatted text sections, perhaps with toggle-able "Hậu quả" and "Bài học". Justification: Enhances storytelling. Library: JS + Tailwind.
+        - Report Info: Misconceptions & SPIN. Goal: Equip sales for objections. Viz/Presentation: Accordion for misconceptions; interactive diagram/steps for SPIN. Content completely hidden until expanded. Justification: Clear, actionable advice. Library: JS + Tailwind.
+        - CONFIRMATION: NO SVG graphics used (unless inline in HTML/CSS or Unicode). NO Mermaid JS used. -->
+
+    <style>
+        :root {
+            --tech-green-dark: #0A7953;
+            --tech-green-medium: #2ECC71;
+            --tech-green-light: #A8E6CE;
+            --tech-green-bg: #F0F7F0;
+            --text-dark: #212121;
+            --text-light: #FAFAFA; 
+            --border-color: #DDE2E1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-content-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--tech-green-bg);
+            color: var(--text-dark);
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-link {
+            color: var(--tech-green-dark);
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--tech-green-medium);
+            border-bottom-color: var(--tech-green-medium);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--tech-green-dark) 0%, var(--tech-green-medium) 100%);
+            color: var(--text-light);
+            padding-top: 4rem; 
+        }
+        
+        .section-title {
+            color: var(--tech-green-dark);
+            border-bottom: 4px solid var(--tech-green-medium);
+            display: inline-block;
+        }
+
+        .card {
+            background-color: #fff;
+            border-left: 6px solid var(--tech-green-dark);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px var(--shadow-color);
+        }
+        .card-accent {
+            border-left-color: var(--tech-green-medium);
+        }
+
+        .accordion-button {
+            background-color: #E8F5E9; 
+            color: var(--tech-green-dark);
+            transition: background-color 0.3s ease;
+            border-radius: 8px;
+        }
+        .accordion-button:hover {
+            background-color: var(--tech-green-light);
+        }
+        .accordion-button .icon { /* Added for icon rotation */
+            transition: transform 0.3s ease;
+        }
+        .accordion-button.active .icon { /* Added for icon rotation */
+            transform: rotate(180deg);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            padding-left: 1.25rem; 
+            padding-right: 1.25rem;
+            padding-top: 0; 
+            padding-bottom: 0;
+            transition: max-height 0.5s ease-out, padding-top 0.5s ease-out, padding-bottom 0.5s ease-out, border-width 0.5s ease-out;
+            background-color: #FBFEFB; 
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border: 0px solid var(--border-content-color); 
+            border-top: none; 
+        }
+        .accordion-content.open {
+             padding-top: 1.25rem; 
+             padding-bottom: 1.25rem;
+             border-width: 1px; 
+        }
+
+        .attack-detail {
+            max-height: 0;
+            overflow: hidden;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            padding-top: 0;
+            padding-bottom: 0;
+            transition: max-height 0.4s ease-out, padding-top 0.4s ease-out, padding-bottom 0.4s ease-out;
+            background-color: #f9fafb; /* Slightly different bg for attack details */
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .attack-detail.open {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+
+        .stat-card {
+            background-color: var(--tech-green-dark);
+            color: var(--text-light);
+        }
+        .stat-card .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--tech-green-light);
+        }
+        .chart-container { 
+            position: relative;
+            width: 100%;
+            max-width: 700px; 
+            margin-left: auto;
+            margin-right: auto;
+            height: 380px; 
+            max-height: 420px; 
+            background-color: #fff;
+            padding: 1.5rem; 
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 320px; 
+                 padding: 1rem;
+            }
+        }
+        .spin-step {
+            border-left: 4px solid var(--tech-green-medium);
+        }
+       
+        #giai-phap .card-content-wrapper > h3 { 
+            color: var(--tech-green-dark); 
+        }
+        #giai-phap .card-content-wrapper > p { 
+            color: var(--text-dark); 
+        }
+        #giai-phap .card-content-wrapper > div.text-4xl { 
+            color: var(--tech-green-medium); 
+        }
+        #giai-phap .card-content-wrapper > h4 { 
+            color: var(--tech-green-dark); 
+        }
+        #giai-phap .card-content-wrapper ul li { 
+            color: var(--text-dark); 
+        }
+        #giai-phap .card-content-wrapper ul li i.fa-check-circle { 
+            color: var(--tech-green-medium); 
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav id="navbar" class="sticky-nav shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center sm:justify-between items-center py-3">
+                <div class="text-xl font-bold text-gray-800">NetGuardX Training</div>
+                <div class="flex flex-wrap justify-center space-x-3 sm:space-x-5">
+                    <a href="#gioi-thieu" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Mở Đầu</a>
+                    <a href="#boi-canh" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Bối Cảnh</a>
+                    <a href="#tinh-huong" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Tình Huống</a>
+                    <a href="#quan-niem" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Quan Niệm</a>
+                    <a href="#giai-phap" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Giải Pháp</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header id="gioi-thieu" class="hero-section py-16 sm:py-24 text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">BUỔI 1 – HIỂU VÌ SAO KHÁCH HÀNG CẦN BẢO MẬT</h1>
+            <p class="text-lg sm:text-xl mb-4">"Thế giới số đầy rẫy hiểm nguy - Tại sao khách hàng của bạn không thể làm ngơ?"</p>
+            <p class="text-lg sm:text-xl mb-4">"An ninh mạng: Không còn là vấn đề của riêng IT – Mà là vấn đề <strong>SỐNG CÒN</strong> của doanh nghiệp."</p>
+            <p class="text-lg sm:text-xl mb-8">"Vai trò của bạn: Tư vấn giải pháp – Bảo vệ tương lai khách hàng."</p>
+            <div class="text-2xl font-semibold">NetGuardX: Dịch vụ giám sát an toàn thông tin toàn diện đồng hành cùng doanh nghiệp.</div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+
+        <div class="mb-12 text-center">
+            <p class="text-lg text-gray-700">Chào mừng bạn đến với buổi đào tạo đầu tiên! Trang này được thiết kế để cung cấp cho bạn kiến thức nền tảng và các công cụ cần thiết để hiểu rõ tầm quan trọng của an ninh mạng đối với khách hàng. Hãy cùng khám phá các rủi ro, hậu quả thực tế, và cách NetGuardX có thể trở thành giải pháp bảo vệ toàn diện.</p>
+        </div>
+
+        <section id="boi-canh" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold section-title mb-10 pb-3 text-center">Phần 1: Bối Cảnh An Ninh Mạng – Mối Đe Dọa Hiện Hữu</h2>
+            <p class="text-center text-gray-600 mb-10">Phần này cung cấp bức tranh toàn cảnh về tình hình an ninh mạng, các mối đe dọa phổ biến và những con số thống kê "biết nói". Đây là những thông tin giá trị bạn có thể sử dụng để tạo nhận thức về tính cấp thiết của bảo mật khi trao đổi với khách hàng.</p>
+
+            <div id="rui-ro" class="card p-6 rounded-lg shadow-xl mb-10">
+                <h3 class="text-2xl font-semibold mb-6 text-var(--tech-green-dark)">1.1. Rủi Ro Bảo Mật Phổ Biến: Những Con Số Gây Sốc</h3>
+                <p class="text-gray-700 mb-6">"Tấn công mạng: Không chừa một ai, không trừ một ngành nghề."</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="stat-card p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold mb-2">Tấn công tại Việt Nam (2023)</h4>
+                        <p class="stat-number">13.900+</p>
+                        <p>vụ, tăng 9.5% so với 2022.</p>
+                    </div>
+                    <div class="stat-card p-6 rounded-lg shadow-md">
+                        <h4 class="text-xl font-semibold mb-2">Tấn công Toàn cầu (Q2/2024)</h4>
+                        <p class="stat-number">Tăng 30%</p>
+                        <p>so với Q2/2023. Cứ 39 giây/vụ.</p>
+                    </div>
+                </div>
+                <div class="chart-container mb-6">
+                    <canvas id="vietnamAttackChart"></canvas>
+                </div>
+                <p class="text-gray-700"><strong>Mục tiêu chính:</strong> Dữ liệu tài chính, thông tin khách hàng, sở hữu trí tuệ, hệ thống điều khiển công nghiệp.</p>
+                <details class="mt-4 text-sm text-gray-600">
+                    <summary class="font-semibold cursor-pointer text-var(--tech-green-medium)">Kịch bản nói chi tiết (Nhấn để xem)</summary>
+                    <div class="mt-2 p-3 bg-gray-50 rounded">
+                        <p>"Chúng ta hãy bắt đầu bằng việc nhìn thẳng vào những con số thống kê... Tại Việt Nam, năm 2023, đã có 13.900 vụ tấn công, tăng 9,5%... 46,15% cơ quan, doanh nghiệp bị tấn công ít nhất 1 lần (2024)... Trên toàn cầu, cứ mỗi 39 giây lại có một cuộc tấn công... 554 website.gov.vn,.edu.vn bị xâm nhập... Mục tiêu chính là dữ liệu tài chính, thông tin khách hàng..."</p>
+                        <table class="min-w-full bg-white mt-4 text-xs">
+                            <thead>
+                                <tr>
+                                    <th class="py-2 px-3 border-b border-gray-200 bg-gray-50 text-left font-semibold text-gray-600">Chỉ số</th>
+                                    <th class="py-2 px-3 border-b border-gray-200 bg-gray-50 text-left font-semibold text-gray-600">Số liệu/Tình hình</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="py-2 px-3 border-b">Số vụ tấn công VN (2023)</td><td class="py-2 px-3 border-b">13.900 vụ, tăng 9,5%</td></tr>
+                                <tr><td class="py-2 px-3 border-b">Tỷ lệ DN VN bị tấn công (2024)</td><td class="py-2 px-3 border-b">46,15%</td></tr>
+                                <tr><td class="py-2 px-3 border-b">Website.gov.vn,.edu.vn bị xâm nhập (2023)</td><td class="py-2 px-3 border-b">554 trang</td></tr>
+                                <tr><td class="py-2 px-3 border-b">Tần suất tấn công toàn cầu</td><td class="py-2 px-3 border-b">1 vụ/39 giây</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </div>
+
+            <div id="loai-hinh-tan-cong" class="card card-accent p-6 rounded-lg shadow-xl mb-10">
+                <h3 class="text-2xl font-semibold mb-6 text-var(--tech-green-medium)">1.2. Các Loại Hình Tấn Công Chính: Nhận Diện Kẻ Thù</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-database mr-2 text-red-500"></i>Mất mát dữ liệu (Data Breach)</h4>
+                        <p class="text-sm text-gray-600">"Dữ liệu là vàng – Mất dữ liệu là mất tất cả."</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                            <p>Kế toán, email lãnh đạo, dữ liệu khách hàng. Xu hướng: Đánh cắp dữ liệu trước khi mã hóa (double extortion).</p>
+                        </div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-file-invoice-dollar mr-2 text-orange-500"></i>Ransomware</h4>
+                        <p class="text-sm text-gray-600">"Doanh nghiệp bị bắt làm con tin số."</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                             <p>Mã hóa dữ liệu, đòi tiền chuộc, ngừng hoạt động. Xu hướng: Double extortion.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-fish mr-2 text-yellow-500"></i>Lừa đảo (Phishing)</h4>
+                        <p class="text-sm text-gray-600">"Một cú click sai lầm, trả giá đắt."</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                            <p>Đánh cắp thông tin đăng nhập, cài mã độc. Gần 60.000 vụ lừa đảo DN Việt (2024).</p>
+                        </div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-server mr-2 text-purple-500"></i>Tấn công DDoS</h4>
+                        <p class="text-sm text-gray-600">"Đánh sập 'cửa hàng' trực tuyến."</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                            <p>Làm tê liệt website, dịch vụ. 360.000 vụ DDoS vào DN Việt (2024), tăng 20%.</p>
+                        </div>
+                    </div>
+                     <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-user-secret mr-2 text-gray-700"></i>Tấn công APT</h4>
+                        <p class="text-sm text-gray-600">"Kẻ thù giấu mặt, nằm vùng chờ thời."</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                            <p>Đánh cắp dữ liệu nhạy cảm dài hạn. 83 chiến dịch APT vào đơn vị trọng yếu VN (2024).</p>
+                        </div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2 flex items-center"><i class="fas fa-network-wired mr-2 text-blue-500"></i>Các hình thức khác</h4>
+                        <p class="text-sm text-gray-600">ICS/OT, Chuỗi cung ứng, Zero-day...</p>
+                        <button onclick="toggleAttackDetail(this)" class="text-sm text-blue-500 hover:underline mt-2">Xem thêm</button>
+                        <div class="attack-detail text-xs text-gray-500">
+                            <p>Tấn công ICS/OT, Chuỗi cung ứng, Zero-day, Đa vector.</p>
+                        </div>
+                    </div>
+                </div>
+                 <details class="mt-4 text-sm text-gray-600">
+                    <summary class="font-semibold cursor-pointer text-var(--tech-green-medium)">Kịch bản nói chi tiết (Nhấn để xem)</summary>
+                    <div class="mt-2 p-3 bg-gray-50 rounded">
+                        <p>"Để có thể tư vấn hiệu quả, chúng ta cần hiểu rõ 'kẻ thù' của mình... Mất mát dữ liệu... Ransomware... Lừa đảo (Phishing)... Tấn công từ chối dịch vụ (DDoS)... Tấn công có chủ đích (APT)... và các hình thức khác như tấn công ICS/OT, chuỗi cung ứng, zero-day, đa vector..."</p>
+                    </div>
+                </details>
+            </div>
+
+            <div id="tac-dong" class="card p-6 rounded-lg shadow-xl mb-10">
+                <h3 class="text-2xl font-semibold mb-6 text-var(--tech-green-dark)">1.3. Tác Động Đến Doanh Nghiệp: Không Chỉ Là Tiền Bạc</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-xl mb-3">Thiệt hại tài chính TRỰC TIẾP:</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Tiền chuộc (Ransomware).</li>
+                            <li>Chi phí khôi phục hệ thống, dữ liệu.</li>
+                            <li>Chi phí điều tra, pháp lý.</li>
+                            <li>Tiền phạt (Nghị định 13).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-xl mb-3">Thiệt hại tài chính GIÁN TIẾP:</h4>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li>Mất doanh thu, mất khách hàng.</li>
+                            <li>Giảm giá cổ phiếu, giá trị thương hiệu.</li>
+                            <li>SMB: Gần <strong>60%</strong> ngừng hoạt động sau 6 tháng bị tấn công.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6">
+                     <h4 class="font-semibold text-xl mb-3">Các tác động khác:</h4>
+                     <ul class="list-disc list-inside text-gray-700 space-y-1">
+                        <li>Gián đoạn hoạt động kinh doanh (ngừng sản xuất, PVOIL không xuất hóa đơn).</li>
+                        <li>Mất mát uy tín và niềm tin.</li>
+                        <li>Hậu quả pháp lý.</li>
+                     </ul>
+                </div>
+                <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded">
+                    <p class="font-bold">Lưu ý quan trọng:</p>
+                    <p>Thiệt hại tội phạm mạng toàn cầu dự kiến: <strong>10,5 nghìn tỷ USD</strong> (2025).</p>
+                </div>
+                <div class="chart-container mt-8">
+                    <canvas id="costOfBreachChart"></canvas>
+                </div>
+                 <details class="mt-4 text-sm text-gray-600">
+                    <summary class="font-semibold cursor-pointer text-var(--tech-green-medium)">Kịch bản nói chi tiết (Nhấn để xem)</summary>
+                    <div class="mt-2 p-3 bg-gray-50 rounded">
+                        <p>"Khi một doanh nghiệp bị tấn công mạng, hậu quả không chỉ dừng lại ở tiền bạc... Thiệt hại tài chính trực tiếp: tiền chuộc, chi phí khôi phục... Thiệt hại gián tiếp: mất doanh thu, mất khách hàng... Gián đoạn hoạt động... Mất uy tín... Hậu quả pháp lý..."</p>
+                         <table class="min-w-full bg-white mt-4 text-xs">
+                            <thead>
+                                <tr><th class="py-2 px-3 border-b">Hạng mục</th><th class="py-2 px-3 border-b">Số liệu/Chi tiết</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="py-2 px-3 border-b">Chi phí trung bình/vụ (2024)</td><td class="py-2 px-3 border-b">4,88 triệu USD</td></tr>
+                                <tr><td class="py-2 px-3 border-b">Thời gian xác định & ngăn chặn (2024)</td><td class="py-2 px-3 border-b">258 ngày</td></tr>
+                                <tr><td class="py-2 px-3 border-b">SMB ngừng hoạt động sau tấn công</td><td class="py-2 px-3 border-b">Gần 60%</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+            </div>
+
+            <div id="phap-ly" class="card card-accent p-6 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-semibold mb-6 text-var(--tech-green-medium)">1.4. Yêu Cầu Pháp Lý: Nghị Định 13/2023/NĐ-CP</h3>
+                <p class="text-gray-700 mb-4">"Nghị định 13/2023/NĐ-CP: Không chỉ là khuyến nghị, mà là <strong>LUẬT ĐỊNH!</strong>"</p>
+                <div class="space-y-3">
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 font-semibold rounded-md flex justify-between items-center">
+                            <span>Đối tượng áp dụng & Dữ liệu cá nhân</span>
+                            <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content text-gray-700">
+                            <p class="mt-2"><strong>Đối tượng:</strong> Mọi tổ chức, cá nhân xử lý dữ liệu cá nhân của công dân Việt Nam.</p>
+                            <p><strong>Dữ liệu cá nhân:</strong> Cơ bản và nhạy cảm (sức khỏe, sinh trắc học...).</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 font-semibold rounded-md flex justify-between items-center">
+                            <span>Trách nhiệm cốt lõi của doanh nghiệp</span>
+                            <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content text-gray-700">
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>Thông báo, xin sự đồng ý rõ ràng.</li>
+                                <li>Áp dụng biện pháp quản lý, kỹ thuật bảo vệ dữ liệu.</li>
+                                <li>Chỉ định nhân sự phụ trách.</li>
+                                <li><strong>Báo cáo Bộ Công an (A05) trong 72 giờ</strong> khi có vi phạm.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button w-full text-left p-4 font-semibold rounded-md flex justify-between items-center">
+                            <span>Hình phạt khi không tuân thủ</span>
+                            <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                        </button>
+                        <div class="accordion-content text-gray-700">
+                            <ul class="list-disc list-inside mt-2 space-y-1">
+                                <li>Xử lý kỷ luật.</li>
+                                <li><strong>Xử phạt vi phạm hành chính:</strong> <strong>120 - 200 triệu VNĐ</strong>, có thể đến <strong>5% tổng doanh thu</strong>.</li>
+                                <li><strong>Xử lý hình sự</strong> (tùy mức độ).</li>
+                                <li><strong>Biện pháp bổ sung:</strong> Ngừng cung cấp dịch vụ, thu hồi giấy phép liên quan, ngừng hoạt động xử lý dữ liệu.</li>
+                                <li><strong>Khắc phục hậu quả:</strong> Công khai xin lỗi, bồi thường thiệt hại cho tổ chức/cá nhân.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                 <details class="mt-4 text-sm text-gray-600">
+                    <summary class="font-semibold cursor-pointer text-var(--tech-green-medium)">Kịch bản nói chi tiết (Nhấn để xem)</summary>
+                    <div class="mt-2 p-3 bg-gray-50 rounded">
+                        <p>"Bên cạnh những thiệt hại, yếu tố pháp lý cũng rất quan trọng... Nghị định 13/2023/NĐ-CP... Đối tượng áp dụng rộng... Dữ liệu cá nhân cơ bản và nhạy cảm... Trách nhiệm cốt lõi: thông báo, xin phép, áp dụng biện pháp bảo vệ, báo cáo trong 72 giờ... Hình phạt: tiền, hình sự, ngừng hoạt động..."</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="tinh-huong" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold section-title mb-10 pb-3 text-center">Phần 2: Tình Huống Thực Tế – Khi Lý Thuyết Trở Thành Hiện Thực Đau Lòng</h2>
+            <p class="text-center text-gray-600 mb-10">Các câu chuyện có thật minh họa sống động rủi ro và hậu quả, giúp bạn đồng cảm và tự tin hơn khi chia sẻ với khách hàng.</p>
+
+            <div class="card p-6 rounded-lg shadow-xl mb-8">
+                <h3 class="text-2xl font-semibold mb-4 text-var(--tech-green-dark)">2.1. Bài Học Từ Các Tổ Chức Giáo Dục: Tưởng An Toàn Mà Không Hề An Toàn</h3>
+                <p class="text-gray-700 mb-4">"Khi cổng trường không còn an toàn trên không gian mạng."</p>
+                <p class="text-gray-600"><strong>Case Study Việt Nam (2023-2024):</strong> Hàng loạt website `.edu.vn` và `.gov.vn` bị xâm nhập. Thủ đoạn: Chèn backlink ẩn, thay đổi giao diện.</p>
+                <p class="text-gray-600 mt-2"><strong>Hậu quả:</strong> Tổn thất uy tín, nguy cơ lộ lọt dữ liệu, gián đoạn hoạt động, chi phí tốn kém.</p>
+            </div>
+            <div class="card card-accent p-6 rounded-lg shadow-xl mb-8">
+                <h3 class="text-2xl font-semibold mb-4 text-var(--tech-green-medium)">2.2. Doanh Nghiệp FDI và Bán Lẻ: "Mỏ Vàng" Của Tin Tặc</h3>
+                <p class="text-gray-700 mb-4"><strong>Case Study PVOIL (04/2024):</strong> Bị ransomware, không thể phát hành hóa đơn điện tử, ảnh hưởng toàn quốc.</p>
+                <p class="text-gray-700 mb-4"><strong>Case Study VNDirect (03/2024):</strong> Bị ransomware, tê liệt giao dịch chứng khoán, gây hoang mang.</p>
+                <p class="text-gray-600"><strong>Thống kê Ransomware VN:</strong> 80 vụ/ngày (2024). Nửa đầu 2024: 3TB dữ liệu bị mã hóa, thiệt hại >10 triệu USD.</p>
+            </div>
+             <div class="card p-6 rounded-lg shadow-xl mb-8">
+                <h3 class="text-2xl font-semibold mb-4 text-var(--tech-green-dark)">2.3. Tình Huống Quốc Tế</h3>
+                <p class="text-gray-700 mb-2"><strong>Ransomware vào Sản xuất/Chuỗi Cung ứng:</strong> Ngừng trệ sản xuất, thiệt hại triệu USD/ngày, mất dữ liệu thiết kế.</p>
+                <p class="text-gray-700 mb-2"><strong>Đánh cắp Dữ liệu Thẻ (Bán lẻ):</strong> Phạt triệu USD, mất niềm tin, tuân thủ PCI DSS tốn kém.</p>
+                <p class="text-gray-700"><strong>DDoS vào Nền tảng Trực tuyến:</strong> Sập hệ thống thi cử, dịch vụ, gây hỗn loạn.</p>
+            </div>
+            <div class="card card-accent p-6 rounded-lg shadow-xl">
+                <h3 class="text-2xl font-semibold mb-4 text-var(--tech-green-medium)">2.4. Kỹ Thuật Kể Chuyện: Chạm Đến Cảm Xúc</h3>
+                <p class="text-gray-700 mb-3">"Con số lay động lý trí, câu chuyện chạm đến trái tim."</p>
+                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                    <li>Dễ nhớ, tạo kết nối cảm xúc.</li>
+                    <li>Giúp khách hàng hình dung rủi ro và giải pháp.</li>
+                    <li>Yếu tố: Nhân vật, bối cảnh, xung đột, cảm xúc, chi tiết "đắt giá", hậu quả đa chiều, bài học.</li>
+                    <li>Lưu ý: Trung thực, bảo mật, tập trung giải pháp.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="quan-niem" class="mb-16 pt-16 -mt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold section-title mb-10 pb-3 text-center">Phần 3: "Khách Hàng Luôn Đúng?" – Phá Vỡ Những Quan Niệm Sai Lầm</h2>
+            <p class="text-center text-gray-600 mb-10">Trang bị cho bạn những luận điểm, bằng chứng để phản bác hiệu quả các quan niệm sai lầm phổ biến của khách hàng, mở đường cho việc giới thiệu giải pháp.</p>
+            
+            <div class="space-y-6">
+                <div class="accordion-item card p-1 rounded-lg shadow-lg">
+                    <button class="accordion-button w-full text-left p-5 font-semibold rounded-md flex justify-between items-center text-lg">
+                        <span>1. "IT của chúng tôi xử lý được hết."</span>
+                        <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content text-gray-700">
+                        <p class="mt-3"><strong>Thực tế:</strong> IT nội bộ đa năng nhưng khó chuyên sâu ANM 24/7. SOC có chuyên môn, công cụ, quy trình, giám sát 24/7 và tập trung 100% vào an ninh.</p>
+                        <p class="mt-2"><strong>Ẩn dụ:</strong> IT nội bộ là bác sĩ đa khoa, SOC là bác sĩ chuyên khoa.</p>
+                    </div>
+                </div>
+                <div class="accordion-item card card-accent p-1 rounded-lg shadow-lg">
+                    <button class="accordion-button w-full text-left p-5 font-semibold rounded-md flex justify-between items-center text-lg">
+                        <span>2. "Công ty tôi nhỏ, không ai nhắm tới."</span>
+                        <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content text-gray-700">
+                        <p class="mt-3"><strong>Thực tế:</strong> SMB là mục tiêu hấp dẫn (bảo mật yếu, nguồn lực hạn chế, là "bàn đạp"). 59% SMB VN từng bị tấn công. Gần 60% SMB phá sản sau 6 tháng bị tấn công nghiêm trọng.</p>
+                    </div>
+                </div>
+                <div class="accordion-item card p-1 rounded-lg shadow-lg">
+                    <button class="accordion-button w-full text-left p-5 font-semibold rounded-md flex justify-between items-center text-lg">
+                        <span>3. "Có Antivirus là đủ rồi."</span>
+                        <i class="fas fa-chevron-down icon transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content text-gray-700">
+                        <p class="mt-3"><strong>Thực tế:</strong> Antivirus truyền thống kém hiệu quả với mối đe dọa mới, tấn công tinh vi. "Dwell time" có thể rất dài (280 ngày). Cần bảo mật đa lớp (EDR, SIEM, SOC).</p>
+                        <p class="mt-2"><strong>Ẩn dụ:</strong> Antivirus là khóa cửa, nhưng cần thêm camera, báo động (SOC).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="spin-technique" class="card p-6 rounded-lg shadow-xl mt-10">
+                <h3 class="text-2xl font-semibold mb-6 text-var(--tech-green-dark)">3.4. Cách Khơi Gợi Điểm Yếu & Xử Lý Phản Đối (Kỹ thuật SPIN)</h3>
+                <div class="space-y-4">
+                    <div class="spin-step p-4 bg-gray-50 rounded-r-lg"><strong>S - Situation (Tình hình):</strong> Tìm hiểu bối cảnh (giải pháp hiện tại, nhân sự, quy trình).</div>
+                    <div class="spin-step p-4 bg-gray-50 rounded-r-lg"><strong>P - Problem (Vấn đề):</strong> Giúp KH nhận ra khó khăn (khó phát hiện sớm, thời gian phản ứng, quá tải).</div>
+                    <div class="spin-step p-4 bg-gray-50 rounded-r-lg"><strong>I - Implication (Hệ lụy/Ảnh hưởng):</strong> Khám phá hậu quả (thiệt hại nếu bị tấn công, rủi ro pháp lý).</div>
+                    <div class="spin-step p-4 bg-gray-50 rounded-r-lg"><strong>N - Need-payoff (Giá trị giải pháp/Nhu cầu được đáp ứng):</strong> Giúp KH thấy lợi ích (an tâm, kinh doanh liên tục, tiết kiệm chi phí).</div>
+                </div>
+                <h4 class="font-semibold text-xl mt-6 mb-3">Nguyên tắc xử lý phản đối:</h4>
+                <ul class="list-disc list-inside text-gray-700">
+                    <li>Lắng nghe & Đồng cảm.</li>
+                    <li>Làm rõ vấn đề.</li>
+                    <li>Cung cấp bằng chứng (số liệu, case study).</li>
+                    <li>Chuyển hóa thành lợi ích ("Đầu tư vào SOC là bảo hiểm cho tài sản số").</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="giai-phap" class="pt-16 -mt-16">
+            <h2 class="text-3xl sm:text-4xl font-bold section-title mb-10 pb-3 text-center">Phần 4: Kết Nối Với Giải Pháp – Tại Sao NetGuardX Là Câu Trả Lời?</h2>
+             <p class="text-center text-gray-600 mb-10">Tổng hợp các điểm chính và liên kết một cách thuyết phục đến giá trị của NetGuardX, giúp bạn tự tin chốt vấn đề.</p>
+
+            <div class="card card-accent p-8 rounded-lg shadow-2xl text-center">
+                <div class="card-content-wrapper">
+                    <h3 class="text-3xl font-bold mb-6">NetGuardX – Mảnh Ghép Hoàn Hảo</h3>
+                    <p class="text-lg mb-3">Từ Mối Đe Dọa (Ransomware, Phishing, APT...) ➔ Hậu Quả (Thiệt hại tài chính, Mất uy tín, Rủi ro pháp lý) ➔ Vượt Qua Quan Niệm Sai Lầm...</p>
+                    <div class="text-4xl my-6"><i class="fas fa-arrow-down"></i></div>
+                    <h4 class="text-2xl font-semibold mb-4">NetGuardX Giải Quyết:</h4>
+                    <ul class="list-none space-y-2 text-left inline-block mx-auto">
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Phát hiện sớm & Ngăn chặn 24/7.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Bảo vệ dữ liệu quan trọng.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Giảm thiểu thiệt hại & gián đoạn.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Hỗ trợ tuân thủ Nghị định 13.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Nâng cao khả năng phục hồi.</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle mr-3"></i>Giải phóng nguồn lực IT nội bộ.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10 text-center mt-16">
+        <div class="container mx-auto px-6">
+            <p>&copy; 2025 Buổi Đào Tạo Bán Hàng NetGuardX. Mọi quyền được bảo lưu.</p>
+            <p class="text-sm mt-2">NetGuardX - Đối Tác An Ninh Tin Cậy Của Bạn</p>
+        </div>
+    </footer>
+
+    <script>
+        // Accordion functionality
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionContent = button.nextElementSibling;
+                const icon = button.querySelector('.icon'); // Ensure your chevron icon has this class
+                const isCurrentlyOpen = button.classList.contains('active');
+
+                button.classList.toggle('active');
+                if (icon) icon.style.transform = isCurrentlyOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                if (!isCurrentlyOpen) {
+                    accordionContent.classList.add('open');
+                    requestAnimationFrame(() => { 
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                    });
+                } else {
+                    accordionContent.style.maxHeight = '0px';
+                    accordionContent.addEventListener('transitionend', () => {
+                        if (!button.classList.contains('active')) {
+                            accordionContent.classList.remove('open');
+                        }
+                    }, { once: true });
+                }
+            });
+        });
+
+        // Attack detail toggle
+        function toggleAttackDetail(button) {
+            const detail = button.nextElementSibling; // .attack-detail
+            const isCurrentlyOpen = detail.classList.contains('open');
+
+            if (!isCurrentlyOpen) {
+                detail.classList.add('open');
+                requestAnimationFrame(() => {
+                    detail.style.maxHeight = detail.scrollHeight + "px";
+                });
+                button.textContent = 'Ẩn bớt';
+            } else {
+                detail.style.maxHeight = '0px';
+                detail.addEventListener('transitionend', () => {
+                     if (!detail.classList.contains('open')) { // Check again
+                        // This part might not be needed if open is removed immediately
+                     }
+                }, { once: true });
+                detail.classList.remove('open'); // Remove open immediately for style change
+                button.textContent = 'Xem thêm';
+            }
+        }
+        
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = document.getElementById('navbar').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+                    
+                    window.scrollTo({
+                         top: offsetPosition,
+                         behavior: "smooth"
+                    });
+                }
+            });
+        });
+        
+        // Active Nav Link on Scroll
+        const sections = document.querySelectorAll("section[id], header[id]");
+        const navLinks = document.querySelectorAll("nav .nav-link");
+        window.onscroll = () => {
+          var current = "gioi-thieu"; // Default to first section ID
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - (document.getElementById('navbar').offsetHeight + 20) ) { 
+              current = section.getAttribute("id"); 
+            }
+          });
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === ("#" + current)) {
+              link.classList.add("active");
+            }
+          });
+        };
+         window.onload = () => {
+            // Ensure all accordion and attack details are initially closed with proper styling
+            document.querySelectorAll('.accordion-content').forEach(content => {
+                content.style.maxHeight = '0px';
+                content.classList.remove('open');
+                content.style.paddingTop = '0px';
+                content.style.paddingBottom = '0px';
+                content.style.borderWidth = '0px';
+            });
+            document.querySelectorAll('.attack-detail').forEach(detail => {
+                detail.style.maxHeight = '0px';
+                detail.classList.remove('open');
+                detail.style.paddingTop = '0px';
+                detail.style.paddingBottom = '0px';
+            });
+            
+            const hash = window.location.hash;
+            let activeLinkSet = false;
+            if (hash) {
+                const activeLink = document.querySelector(`nav .nav-link[href="${hash}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                    activeLinkSet = true;
+                }
+            }
+            if (!activeLinkSet) { 
+                 const firstLink = document.querySelector('nav .nav-link[href="#gioi-thieu"]');
+                 if(firstLink) firstLink.classList.add('active');
+            }
+        };
+
+
+        // Chart.js - Vietnam Attack Chart
+        const vnAttackCtx = document.getElementById('vietnamAttackChart').getContext('2d');
+        new Chart(vnAttackCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Tổng số vụ VN (2023)', 'Website .gov, .edu bị xâm nhập (2023)', 'Ước tính DN bị tấn công (2024)'],
+                datasets: [{
+                    label: 'Số vụ tấn công',
+                    data: [13900, 554, 659000], 
+                    backgroundColor: [
+                        'rgba(10, 121, 83, 0.7)', 
+                        'rgba(46, 204, 113, 0.7)', 
+                        'rgba(168, 230, 206, 0.7)'  
+                    ],
+                    borderColor: [
+                        '#0A7953',
+                        '#2ECC71',
+                        '#A8E6CE'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        type: 'logarithmic', 
+                        beginAtZero: false, 
+                         ticks: {
+                            callback: function(value, index, values) {
+                                if (value === 1 || value === 10 || value === 100 || value === 1000 || value === 10000 || value === 100000 || value === 1000000) {
+                                   return value.toLocaleString();
+                                }
+                                if (value >= 1000000) return (value/1000000).toLocaleString() + 'M';
+                                if (value >= 1000) return (value/1000).toLocaleString() + 'K';
+                                return null; 
+                            },
+                             min: 1, 
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    title: { display: true, text: 'Thống kê tấn công mạng tại Việt Nam (Trục Y Logarit)', font: {size: 16}, padding: {bottom: 15} },
+                     tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y.toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart.js - Cost of Breach Chart
+        const costBreachCtx = document.getElementById('costOfBreachChart').getContext('2d');
+        new Chart(costBreachCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Chi phí TB/vụ (Toàn cầu 2024)', 'Chi phí ngành Tài chính (Toàn cầu 2024)'],
+                datasets: [{
+                    label: 'Chi phí (Triệu USD)',
+                    data: [4.88, 6.08], 
+                    backgroundColor: [
+                        'rgba(10, 121, 83, 0.8)',
+                        'rgba(46, 204, 113, 0.8)'
+                    ],
+                    borderColor: [
+                        '#FFFFFF',
+                        '#FFFFFF'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { 
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 13
+                            }
+                        }
+                    },
+                    title: { 
+                        display: true, 
+                        text: 'Chi Phí Vi Phạm Dữ Liệu (Triệu USD)', 
+                        font: {size: 16},
+                        padding: {bottom: 15} 
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                     label += context.parsed.toLocaleString() + ' Triệu USD';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%' 
+            }
+        });
+    </script>
+</body>
+</html>
